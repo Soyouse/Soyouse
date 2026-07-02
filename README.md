@@ -35,7 +35,26 @@ Most of my work lives in **MCP (Model Context Protocol) servers** — thin, type
 
 ### Stack
 
-`Node.js` · `TypeScript` · `MCP` · `Docker` · `Vitest` / `Stryker` (mutation testing) · `GitHub Actions`
+**Languages & runtime**
+`Node.js` · `TypeScript` · `Python` · `C++` (native STT/TTS bindings) · `Bash`
+
+**AI / ML**
+`Claude` · `MCP` · `OpenAI` · `xAI Grok (Aurora)` · `Gemini` · `Whisper` (STT) · `Kyutai TTS` · `Qwen3-Embedding` (local GPU) · `llama.cpp` · `ONNX Runtime` · `BM25 + hybrid semantic search`
+
+**Web & backend**
+`Next.js` · `React` · `Fastify` · `Express` · `Prisma` · `Zod` · `Socket.IO` · `Tailwind`
+
+**Data**
+`PostgreSQL` · `DuckDB` · `SQLite`
+
+**Testing & CI**
+`Vitest` · `node:test` · `Playwright` · `Pytest` · `Stryker` (mutation testing) · `Husky` · `GitHub Actions`
+
+**Infra & deploy**
+`Docker` · `Nginx` · `Tailscale` · `Cloudflare` · `systemd` · `pnpm` / `Turbo` monorepo
+
+**Custom engines**
+`svg-core` — home-built deterministic SVG → PNG rendering engine (Resvg + Yoga layout), video pipeline built on `HyperFrames`
 
 ---
 
