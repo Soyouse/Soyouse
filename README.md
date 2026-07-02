@@ -31,6 +31,9 @@ Most of my work lives in **MCP (Model Context Protocol) servers** — thin, type
 | | |
 |---|---|
 | **[reddit-mcp](https://github.com/Soyouse/reddit-mcp)** | Home-built MCP server for driving Reddit accounts through the official OAuth Data API — multi-account, with a dedicated anti-spam / anti-manipulation safety layer (throttling, vote-guarding, warmup gating) as the core value, not an afterthought. |
+| **[discord-mcp](https://github.com/Soyouse/discord-mcp)** | MCP server for driving Discord bots — multi-bot, real-time message relay, plus a companion web cockpit (React front-end, live updates over Socket.IO). |
+| **[publer-mcp](https://github.com/Soyouse/publer-mcp)** | MCP server for Publer (multi-network social scheduling) — multi-workspace, concurrent-session safe. |
+| **[media-mcp](https://github.com/Soyouse/media-mcp)** | MCP server wrapping the xAI/Grok API for AI image and video generation — the visual hands behind an autonomous social-posting agent. |
 | **[memory-engine](https://github.com/Soyouse/memory-engine)** | Semantic memory system for AI agents — persistent recall across sessions. |
 
 ### Stack
@@ -39,7 +42,13 @@ Most of my work lives in **MCP (Model Context Protocol) servers** — thin, type
 `Node.js` · `TypeScript` · `Python` · `C++` (native STT/TTS bindings) · `Bash`
 
 **AI / ML**
-`Claude` · `MCP` · `OpenAI` · `xAI Grok (Aurora)` · `Gemini` · `Whisper` (STT) · `Kyutai TTS` · `Qwen3-Embedding` (local GPU) · `llama.cpp` · `ONNX Runtime` · `BM25 + hybrid semantic search`
+`Claude` · `MCP` · `OpenClaw` (persistent agent runtime) · `OpenAI` · `xAI Grok (Aurora)` · `Gemini` · `Whisper` (STT) · `Kyutai TTS` · `Qwen3-Embedding` (local GPU) · `llama.cpp` · `ONNX Runtime` · `BM25 + hybrid semantic search`
+
+**Monitoring & observability**
+`Uptime Kuma` (watchdog) · `ntfy` (alerting) · append-only JSONL run journals
+
+**Claude Code internals**
+Deep on the harness itself, not just prompting it: custom **hooks** (SessionStart, PreCompact, Stop-gates that enforce proof-before-done), a self-updating **semantic memory system** with auto-reindexing, **plugin/skill authoring**, protected-path guardrails, and a dozen home-built **MCP servers** wired into it as the daily driver.
 
 **Web & backend**
 `Next.js` · `React` · `Fastify` · `Express` · `Prisma` · `Zod` · `Socket.IO` · `Tailwind`
