@@ -14,7 +14,7 @@ Autonomous agents, MCP servers, and the guardrails that let them run with less a
 
 ### What I do
 
-I design and ship systems where AI agents take on more of the loop over time — not by trusting the model more, but by engineering the boundary around it: mechanical guardrails, contract tests between components, fail-fast checks, and monitoring that catches drift before it becomes an incident.
+I design and ship systems where AI agents take on more of the loop over time — not by trusting the model more, but by engineering the boundary around it: mechanical guardrails, contract tests between components, formal specs where concurrency is real, static coupling detection, and production canaries that catch drift before it becomes an incident. The rule underneath all of it: **the LLM proposes, a deterministic machine gives the verdict — never the other way around.**
 
 Most of my work lives in **MCP (Model Context Protocol) servers** — thin, typed bridges between AI agents and real systems (infra, comms, CRM, social, media) — built to be driven by an agent as reliably as a human drives a UI.
 
@@ -22,8 +22,10 @@ Most of my work lives in **MCP (Model Context Protocol) servers** — thin, type
 
 - **Scientific method before code.** Hypothesis → measurement → root cause → targeted fix. A failed attempt means going back to measurement, not trying something else blind.
 - **Zero technical debt, built scalable from the start.** No shortcuts I'll have to retrofit later — infrastructure that's expensive to redo is built right the first time.
-- **Anti-regression by contract, not just by incident.** Every boundary between components gets a contract test *before* it breaks, not just after — bugs get a red test first, then the fix.
-- **CI that never blocks.** Fast local feedback (watch mode), heavier verification (mutation testing, full suite) runs async in CI — never in the way of shipping.
+- **Anti-regression by contract, not just by incident.** Every boundary between components gets a contract test *before* it breaks, not just after — bugs get a red test first, then the fix. Decision logic is isolated from I/O (pure functions) so it's testable and mutable.
+- **An assurance ladder matched to what can be proven.** Pure logic with strong invariants → property-based tests (`fast-check`) + mutation gates (`Stryker`, ratcheted, never lowered). Non-serialized concurrency (daemons, queues, locks, shared mutable state) → a `TLA+` spec with **trace validation** (the model checker proves the plan, a trace anchors code to plan, a mandatory negative-check kills hollow specs — because the spec was written by an LLM). Residual I/O that can't be unit-tested → **production canaries**, best-effort and non-blocking.
+- **Implicit coupling is enemy #1.** Shared truth duplicated without a link in the code is the root of both heavy audits and treacherous regressions. Static detection, never git history: `dependency-cruiser` (imports/boundaries), `jscpd` (duplicated literals/paths), shared types (`tsc` as impact analysis) → single source + a gate.
+- **CI that never blocks.** Fast local feedback (watch mode), heavier verification (mutation testing, full suite) runs async in CI — never in the way of shipping. GitHub is a bonus, never a production dependency: everything runs locally too.
 - **No flattery, ever.** I want the real state of a system, including when it's bad.
 
 ### Selected projects
@@ -45,7 +47,7 @@ Most of my work lives in **MCP (Model Context Protocol) servers** — thin, type
 `Claude` · `MCP` · `OpenClaw` (persistent agent runtime) · `OpenAI` · `xAI Grok (Aurora)` · `Gemini` · `Whisper` (STT) · `Kyutai TTS` · `Qwen3-Embedding` (local GPU) · `llama.cpp` · `ONNX Runtime` · `BM25 + hybrid semantic search`
 
 **Monitoring & observability**
-`Uptime Kuma` (watchdog) · `ntfy` (alerting) · append-only JSONL run journals
+`Uptime Kuma` (watchdog) · `ntfy` (alerting) · production **canary** checks (best-effort, non-blocking) · append-only JSONL run journals
 
 **Claude Code internals**
 Deep on the harness itself, not just prompting it: custom **hooks** (SessionStart, PreCompact, Stop-gates that enforce proof-before-done), a self-updating **semantic memory system** with auto-reindexing, **plugin/skill authoring**, protected-path guardrails, and a dozen home-built **MCP servers** wired into it as the daily driver.
@@ -56,8 +58,8 @@ Deep on the harness itself, not just prompting it: custom **hooks** (SessionStar
 **Data**
 `PostgreSQL` · `DuckDB` · `SQLite`
 
-**Testing & CI**
-`Vitest` · `node:test` · `Playwright` · `Pytest` · `Stryker` (mutation testing) · `Husky` · `GitHub Actions`
+**Testing, verification & CI**
+`Vitest` · `node:test` · `Playwright` · `Pytest` · `Stryker` (mutation testing, ratcheted gates) · `fast-check` (property-based) · `TLA+` / TLC (model checking + trace validation for non-serialized concurrency) · `dependency-cruiser` + `jscpd` (implicit-coupling detection) · `Husky` · `GitHub Actions`
 
 **Infra & deploy**
 `Docker` · `Nginx` · `Tailscale` · `Cloudflare` · `systemd` · `pnpm` / `Turbo` monorepo
