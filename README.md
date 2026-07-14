@@ -8,7 +8,6 @@ Autonomous agents, a dozen home-built MCP servers, and the formal guardrails tha
 *A one-person operation, with AI in the loop — not a team behind these.*
 
 [![GitHub followers](https://img.shields.io/github/followers/Soyouse?style=flat&logo=github)](https://github.com/Soyouse)
-[![X (Twitter)](https://img.shields.io/badge/X-%40SoyouseHQ-black?style=flat&logo=x)](https://x.com/SoyouseHQ)
 
 </div>
 
